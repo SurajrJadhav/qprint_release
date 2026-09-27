@@ -1,0 +1,7 @@
+# Copy to key.properties and fill in. Do not commit key.properties.
+# See PLAY_STORE_CHECKLIST.md in the customer_app folder.
+
+storePassword=your_keystore_password
+keyPassword=your_key_password
+keyAlias=upload
+storeFile=../upload-keystore.jks

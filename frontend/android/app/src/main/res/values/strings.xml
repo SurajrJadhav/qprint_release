@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">QPrint</string>
+    <string name="title_activity_main">QPrint</string>
+    <string name="package_name">com.qprint.app</string>
+    <string name="custom_url_scheme">com.qprint.app</string>
+</resources>

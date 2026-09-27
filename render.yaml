@@ -1,0 +1,66 @@
+services:
+  - type: web
+    name: qprint-backend
+    env: go
+    plan: free
+    buildCommand: cd backend && go mod download && go build -o ../bin/api ./cmd/api
+    startCommand: ./bin/api
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: qprint-db
+          property: connectionString
+      # JWT_SECRET: must be 32+ characters. Set manually in Render dashboard (Secret) or use generateValue and ensure length.
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PORT
+        value: 10000
+      # Required in production (no default *). Set to your frontend URL(s), comma-separated e.g. https://yourapp.vercel.app
+      - key: ALLOWED_ORIGINS
+        sync: false
+      # Set to production on Render so test mode is disabled
+      - key: ENVIRONMENT
+        value: production
+      # S3 Configuration (recommended for production)
+      # Uncomment and set these if using S3:
+      # - key: AWS_S3_BUCKET
+      #   value: your-bucket-name
+      # - key: AWS_REGION
+      #   value: us-east-1
+      # - key: AWS_ACCESS_KEY_ID
+      #   sync: false
+      # - key: AWS_SECRET_ACCESS_KEY
+      #   sync: false
+      # Local storage (fallback if S3 not configured)
+      - key: UPLOADS_DIR
+        value: /opt/render/project/src/uploads
+      # Email Configuration (Resend SMTP)
+      # Note: SMTP ports are blocked on Render free tier. You need a paid plan ($7/month+) to use SMTP.
+      # Alternative: Use Resend API instead (see RESEND_SMTP_SETUP.md for API setup)
+      # - key: SMTP_HOST
+      #   value: smtp.resend.com
+      # - key: SMTP_PORT
+      #   value: "587"
+      # - key: SMTP_USER
+      #   value: resend
+      # - key: SMTP_PASSWORD
+      #   sync: false  # Set manually in Render dashboard (your Resend API key)
+      # - key: FROM_EMAIL
+      #   value: noreply@yourdomain.com  # Must be verified domain in Resend
+      # - key: FROM_NAME
+      #   value: Qprint
+      # - key: FRONTEND_URL
+      #   value: https://yourdomain.com  # Use your custom domain (or Vercel URL if no custom domain)
+    # Note: Persistent disk requires paid plan ($7/month minimum)
+    # For free tier, files will be stored in ephemeral storage
+    # Consider using S3 or other cloud storage for production
+    # disk:
+    #   name: qprint-uploads
+    #   mountPath: /opt/render/project/src/uploads
+    #   sizeGB: 1
+
+databases:
+  - name: qprint-db
+    plan: free
+    databaseName: qprint
+    user: qprint_user

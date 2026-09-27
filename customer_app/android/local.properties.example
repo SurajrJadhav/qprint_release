@@ -1,0 +1,7 @@
+# Copy this to local.properties and fill in your values.
+# local.properties is gitignored - never commit it.
+sdk.dir=C\:\\Users\\YOUR_USERNAME\\AppData\\Local\\Android\\Sdk
+flutter.sdk=C\:\\path\\to\\flutter
+
+# Required for Google Maps. Get key from Google Cloud Console.
+MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY_HERE

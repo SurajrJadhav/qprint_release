@@ -1,0 +1,3 @@
+// Google Maps API key. Replace with your key from Google Cloud Console.
+// Restrict the key to your app's bundle ID. Add MapsConfig.xcconfig to .gitignore for production.
+MAPS_API_KEY=AIzaSyBhL_IpUxmfPjtVFFB-IhQkCRVxFx-XUPo

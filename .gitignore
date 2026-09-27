@@ -1,0 +1,274 @@
+# .gitignore for Qprint (GitHub-ready release)
+
+# ============================================
+# Environment Variables & Secrets
+# ============================================
+.env
+.env.*
+!.env.example
+*.env
+!*.env.example
+backend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+admin_frontend/.env.local
+admin_frontend/.env.development.local
+admin_frontend/.env.test.local
+admin_frontend/.env.production.local
+
+# Firebase / Google / signing secrets
+**/google-services.json
+**/GoogleService-Info.plist
+**/android/key.properties
+**/android/local.properties
+**/*.pfx
+**/*.p12
+**/*.jks
+**/*.keystore
+**/serviceAccount*.json
+**/firebase-adminsdk*.json
+CREDENTIALS_UPDATED.md
+
+# ============================================
+# Backend (Go)
+# ============================================
+backend/*.exe
+backend/*.exe~
+backend/main
+backend/main.exe
+backend/qprint.exe
+backend/backend
+backend/backend.exe
+backend/api
+backend/api.exe
+backend/test_build
+backend/backend_api
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace files
+go.work
+go.work.sum
+
+# Build / binary dump folders
+backend/bin/
+/bin/
+/bin/**
+
+# Uploaded user content
+backend/uploads/
+uploads/
+**/uploads/
+
+# ============================================
+# Frontend (Next.js)
+# ============================================
+frontend/node_modules/
+admin_frontend/node_modules/
+node_modules/
+
+frontend/.next/
+frontend/out/
+frontend/build/
+admin_frontend/.next/
+admin_frontend/out/
+admin_frontend/build/
+
+**/.vercel/
+
+# ============================================
+# Mobile / Desktop (Flutter)
+# ============================================
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/.pub-cache/
+**/.pub/
+**/build/
+
+customer_app/build/
+shopkeeper_app/build/
+**/*.apk
+**/*.aab
+**/*.ipa
+**/*.app
+**/*.dmg
+**/*.msix
+
+# Flutter IDE project files
+**/*.iml
+
+# Android build caches (KEEP gradlew + gradle-wrapper.*)
+**/android/.gradle/
+**/android/build/
+**/android/.idea/
+**/android/.cxx/
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+**/android/captures/
+
+# iOS generated / pods
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# Windows / Linux / macOS Flutter generated registrants
+**/windows/flutter/generated_plugin_registrant.cc
+**/windows/flutter/generated_plugin_registrant.h
+**/windows/flutter/generated_plugins.cmake
+**/linux/flutter/generated_plugin_registrant.cc
+**/linux/flutter/generated_plugin_registrant.h
+**/linux/flutter/generated_plugins.cmake
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/ephemeral/
+
+# ============================================
+# Logs & process files
+# ============================================
+*.log
+*.log.*
+**/*.log
+*.pid
+project.pid
+
+# Do NOT ignore dependency lockfiles needed to build:
+# package-lock.json, yarn.lock, pubspec.lock, go.sum stay tracked.
+
+# ============================================
+# Temporary / OS files
+# ============================================
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ============================================
+# IDE
+# ============================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.idea/
+*.iws
+*.ipr
+out/
+.idea_modules/
+.classpath
+.project
+.settings/
+
+# ============================================
+# Python
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.egg-info/
+.eggs/
+
+# ============================================
+# Testing & coverage
+# ============================================
+coverage/
+*.coverage
+*.cover
+.hypothesis/
+.pytest_cache/
+.tox/
+.coverage.*
+htmlcov/
+.nyc_output/
+test-results/
+junit.xml
+
+# ============================================
+# Database
+# ============================================
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-shm
+*.db-wal
+pgdata/
+postgres-data/
+
+# ============================================
+# Cloud / tunnels / local tools
+# ============================================
+cloudflared
+cloudflared.exe
+.aws/
+
+# ============================================
+# Local test helpers with secrets
+# ============================================
+test_db_connection.bat
+test_admin_connection.html
+dummyPrinter
+
+# Archives / backups
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.bak
+*.backup
+*.old
+
+# Build log dumps
+build_out.txt
+build_stderr.txt
+build_stdout.txt
+
+# Capacitor local
+**/.capacitor/
+
+# Built API binaries from build.bat / build.sh
+backend/qprint-api
+backend/qprint-api.exe
+backend/qprint-api-debug
+backend/qprint-api-debug.exe
+
+# Bundled print tools (downloaded by setup scripts — too large for GitHub)
+shopkeeper_app/windows/runner/bin/LibreOffice/
+shopkeeper_app/windows/runner/bin/LibreOfficePortable/
+shopkeeper_app/windows/runner/bin/SumatraPDF.exe
+shopkeeper_app/windows/runner/bin/App/
+shopkeeper_app/bin/
