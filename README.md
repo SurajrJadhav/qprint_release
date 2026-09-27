@@ -2,6 +2,40 @@
 
 Print / file-sharing platform: customers upload documents, nearby shopkeepers print them. Includes web apps, a customer Android app, and a shopkeeper Windows app.
 
+## After clone (required once)
+
+```bat
+git clone git@github.com:SurajrJadhav/qprint_release.git
+cd qprint_release
+setup.bat
+```
+
+Linux/macOS (deps + env only; Windows print binaries need Windows):
+
+```bash
+chmod +x setup.sh build.sh manage.sh
+./setup.sh
+```
+
+`setup` is **idempotent**:
+
+| Step | Behavior |
+|------|----------|
+| Env files | Creates from `*.example` only if missing — never overwrites yours |
+| `npm install` / `go mod` / `flutter pub get` | Skips npm if `node_modules` already exists |
+| SumatraPDF / LibreOffice | Downloads **only if missing or invalid**; partial downloads are deleted, not kept |
+
+Options:
+
+```bat
+setup.bat              rem full (env + deps + Windows bins)
+setup.bat env          rem env examples only
+setup.bat deps         rem go / npm / flutter only
+setup.bat bins         rem Sumatra + LibreOffice only (Windows)
+```
+
+`build.bat` does **not** download extras. Run `setup.bat` once after clone, then build anytime.
+
 ## Project layout
 
 ```
@@ -12,6 +46,7 @@ qprint_release/
 ├── customer_app/      Customer mobile app (Flutter / Android)
 ├── shopkeeper_app/    Shopkeeper desktop app (Flutter / Windows)
 ├── scripts/           Shared helpers (OAuth config, upload tools)
+├── setup.bat / setup.sh
 ├── build.bat / build.sh
 ├── manage.bat / manage.sh
 └── render.yaml
@@ -27,50 +62,16 @@ qprint_release/
 
 ## Environment setup
 
-Never commit real secrets. Copy the examples and fill in local values:
+`setup.bat` / `setup.sh` copies examples for you. Fill in real values (never commit secrets):
 
-```bash
-# Backend
-copy backend\.env.example backend\.env
+| File | Purpose |
+|------|---------|
+| `backend/.env` | API, DB, JWT, Razorpay, `GOOGLE_CLIENT_IDS` |
+| `frontend/.env.local` | `NEXT_PUBLIC_API_URL`, Google web client ID |
+| `admin_frontend/.env.local` | Admin API URL |
+| `customer_app/android/app/google-services.json` | Firebase (replace example) |
 
-# Web frontends
-copy frontend\.env.example frontend\.env.local
-copy admin_frontend\.env.example admin_frontend\.env.local
-```
-
-Backend `.env` keys (see `backend/.env.example`):
-
-| Variable | Purpose |
-|----------|---------|
-| `PORT` | API port (default `8080`) |
-| `DATABASE_URL` | Postgres connection string |
-| `JWT_SECRET` | Auth signing secret |
-| `RAZORPAY_*` | Payments (test or live) |
-| `ALLOWED_ORIGINS` | CORS origins |
-| `GOOGLE_CLIENT_IDS` | Comma-separated OAuth client IDs |
-
-Frontend `.env.local`:
-
-| Variable | Purpose |
-|----------|---------|
-| `NEXT_PUBLIC_API_URL` | Backend URL |
-| `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Google Sign-In (web) |
-
-Customer Android also needs Firebase config:
-
-```text
-copy customer_app\android\app\google-services.json.example
-     customer_app\android\app\google-services.json
-```
-
-Fill `google-services.json` from the Firebase console. For release signing, copy:
-
-```text
-customer_app\android\key.properties.example  → key.properties
-customer_app\android\local.properties.example → local.properties
-```
-
-Shared public Google OAuth IDs used by builds live in `scripts/google_oauth.config.bat` (and `.sh`).
+Shared public Google OAuth IDs for app builds: `scripts/google_oauth.config.bat` (and `.sh`).
 
 ## Database
 
@@ -119,7 +120,6 @@ build.bat debug shopkeeper
 ### Linux / macOS
 
 ```bash
-chmod +x build.sh
 ./build.sh
 ./build.sh debug
 ./build.sh release
@@ -143,11 +143,7 @@ Release customer outputs:
 
 Shopkeeper Windows output: `shopkeeper_app/build/windows/x64/runner/Release/` (or `Debug/`).
 
-Shopkeeper PDF printing expects `SumatraPDF.exe` under `shopkeeper_app/windows/runner/bin/`. If missing, `scripts/setup_sumatra.ps1` can fetch it on Windows.
-
-## Optional helpers
-
-Kept under `scripts/` and app `scripts/` folders (signing certs, Sumatra/LibreOffice setup, release upload). Use only when you need those one-off tasks — day-to-day builds go through `build.bat` / `build.sh`.
+PDF print needs Sumatra under `shopkeeper_app/windows/runner/bin/` (from `setup.bat bins`). LibreOffice there is optional for Word/PPT.
 
 ## Deploy notes
 

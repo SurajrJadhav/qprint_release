@@ -240,15 +240,13 @@ exit /b 0
 echo -------- Shopkeeper app ^(Flutter Windows^) [%MODE%] --------
 pushd shopkeeper_app
 
-REM SumatraPDF required for PDF print
+REM SumatraPDF / LibreOffice: install once via setup.bat bins (not every build)
 if not exist "windows\runner\bin\SumatraPDF.exe" (
-  if exist "scripts\setup_sumatra.ps1" (
-    echo Setting up SumatraPDF...
-    powershell -ExecutionPolicy Bypass -File scripts\setup_sumatra.ps1
-  )
+  echo WARNING: SumatraPDF.exe missing. Run from repo root: setup.bat bins
+  echo PDF printing will not work until it is installed.
 )
-if not exist "windows\runner\bin\SumatraPDF.exe" (
-  echo WARNING: SumatraPDF.exe missing - PDF print may fail. Place it in shopkeeper_app\windows\runner\bin\
+if not exist "windows\runner\bin\LibreOffice\App\libreoffice\program\soffice.exe" (
+  echo NOTE: LibreOffice not found. Optional for Word/PPT. Run: setup.bat bins
 )
 
 call flutter pub get
